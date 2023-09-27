@@ -18,7 +18,7 @@ const AccountSettings = () => {
         <Button
           variant="outline"
           size="icon"
-          className="rounded-full focus-visible:shadow-none cursor-pointer"
+          className="rounded-full focus-visible:shadow-none cursor-pointer bg-transparent"
         >
           <Avatar className="justify-center items-center flex w-6 h-6">
             A

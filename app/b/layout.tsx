@@ -1,24 +1,19 @@
+"use client";
+
+import SideNav from "@/components/side-nav";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+
 export default function BoardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [isNavOpen, setIsNavOpen] = useState(true);
+
   return (
-    <div className="grow w-full flex">
-      <div className="w-[260px] min-h-full h-full max-h-full overflow-y-auto">
-        <p>Your boards</p>
-        {[
-          {
-            icon: "🚀",
-            text: "Test board",
-          },
-        ].map(({ icon, text }) => (
-          <div className="space-x-2">
-            <span>{icon}</span>
-            <span>{text}</span>
-          </div>
-        ))}
-      </div>
+    <div className={cn("grow basis-0 shrink-0 w-full flex relative")}>
+      <SideNav isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
 
       {children}
     </div>
