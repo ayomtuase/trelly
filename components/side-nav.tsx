@@ -16,7 +16,7 @@ const SideNav = ({
   return (
     <nav
       className={cn(
-        "self-stretch z-10 overflow-y-auto backdrop-blur bg-black/[0.16] relative dark:bg-[hsla(206,13.7%,10%,0.9)]",
+        "self-stretch text-white z-10 overflow-y-auto backdrop-blur bg-black/[0.16] relative dark:bg-[hsla(206,13.7%,10%,0.9)]",
         {
           "min-w-4 w-4": !isNavOpen,
           "min-w-[260px] w-[260px] max-w-[260px]": isNavOpen,
@@ -29,7 +29,7 @@ const SideNav = ({
           <Button
             variant="outline"
             size="icon"
-            className="rounded absolute top-3 z-10 text-white -right-5"
+            className="rounded absolute top-3 z-10 -right-5"
             onClick={() => setIsNavOpen(true)}
           >
             <ChevronRight className="" />

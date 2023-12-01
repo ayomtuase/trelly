@@ -20,7 +20,7 @@ const AccountSettings = () => {
           size="icon"
           className="rounded-full focus-visible:shadow-none cursor-pointer bg-transparent"
         >
-          <Avatar className="justify-center items-center flex w-6 h-6">
+          <Avatar className="text-white justify-center items-center flex w-6 h-6">
             A
           </Avatar>
           <span className="sr-only">Account and Settings</span>

@@ -96,7 +96,7 @@ const BoardTitle = () => {
       <div className="max-w-full relative flex h-8">
         <Input
           className={cn(
-            "font-bold text-black dark:white text-lg dark:black focus-visible:ring-offset-0 max-w-full focus-visible:ring-[#388BFF] max-h-8 px-1 bg-white rounded-[1px]",
+            "font-bold max-w-full text-lg max-h-8 bg-white rounded-[1px]",
             {
               hidden: !isEditing,
             }
@@ -115,7 +115,7 @@ const BoardTitle = () => {
 
         <h1
           className={cn(
-            "font-bold m-0 whitespace-nowrap grow overflow-hidden text-ellipsis text-lg hover:bg-[#A6C5E229] cursor-pointer rounded-sm px-2 p-1",
+            "font-bold m-0 whitespace-nowrap grow overflow-hidden text-ellipsis text-white text-lg hover:bg-[#A6C5E229] cursor-pointer rounded-sm px-2 p-1",
             {
               hidden: isEditing,
             }

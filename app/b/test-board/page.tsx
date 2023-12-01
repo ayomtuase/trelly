@@ -1,3 +1,4 @@
+import BoardContent from "@/components/board-content";
 import BoardTitle from "@/components/board-title";
 
 const BoardPage = () => {
@@ -6,6 +7,7 @@ const BoardPage = () => {
       <div className="flex items-center backdrop-blur-sm bg-black/[0.24] w-full max-w-full px-4 py-3 relative">
         <BoardTitle />
       </div>
+      <BoardContent />
     </div>
   );
 };
