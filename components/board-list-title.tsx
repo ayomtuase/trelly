@@ -36,10 +36,8 @@ const BoardListTitle = ({ initialTitle }: { initialTitle: string }) => {
 
   const updateInputHeight = (el: HTMLTextAreaElement | null) => {
     if (!el) return;
-    console.log({ scrollHeight: el?.scrollHeight });
-
     el.style.height = `0px`;
-    el.style.height = `${el?.scrollHeight + 8}px`;
+    el.style.height = `${el?.scrollHeight}px`;
   };
 
   const inputCallbackRef = useCallback((node: HTMLTextAreaElement) => {
@@ -60,16 +58,16 @@ const BoardListTitle = ({ initialTitle }: { initialTitle: string }) => {
   }, [isEditing]);
 
   return (
-    <div className="grow h-auto text-sm overflow-hidden">
+    <div className="grow h-auto text-sm">
       {isEditing && (
         <Textarea
           className={cn(
-            "font-bold w-full bg-popover overflow-y-hidden rounded-sm resize-none "
+            "font-bold w-full bg-popover pl-[7.5px] pr-2 pt-[9px] pb-2.5 leading-4 overflow-y-hidden rounded-sm resize-none"
           )}
           ref={inputCallbackRef}
           value={inputValue}
           onChange={onInputChange}
-          // onBlur={() => setIsEditing(false)}
+          onBlur={() => setIsEditing(false)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               setIsEditing(false);
@@ -79,9 +77,13 @@ const BoardListTitle = ({ initialTitle }: { initialTitle: string }) => {
       )}
 
       <h1
-        className={cn("font-bold m-0 cursor-pointer break-words", {
-          hidden: isEditing,
-        })}
+        className={cn(
+          "font-bold m-0 cursor-pointer py-2.5 leading-4 [overflow-wrap:anywhere] ml-2",
+          {
+            hidden: isEditing,
+          }
+        )}
+        role="textbox"
         onClick={() => setIsEditing(true)}
       >
         {title}
