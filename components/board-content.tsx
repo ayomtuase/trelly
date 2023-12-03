@@ -16,10 +16,14 @@ const BoardContent = () => {
             key={list.id}
             className="rounded-xl bg-[#f1f2f4] dark:bg-[#101204] w-[272px]"
           >
-            <div className="flex justify-between items-start px-4 py-2 max-w-full">
+            <div className="flex justify-between items-start px-3 py-2 max-w-full">
               <BoardListTitle initialTitle={list.title} />
-              <Button variant="outline" size="icon" className="w-3 h-3 p-2">
-                <MoreHorizontal cursor="pointer"/>
+              <Button
+                variant="outline"
+                size="icon"
+                className="w-8 h-8 ml-2.5 bg-transparent hover:bg-[#091E420F] hover:dark:bg-[#A6C5E229]"
+              >
+                <MoreHorizontal cursor="pointer" size={16} />
               </Button>
             </div>
             <Droppable droppableId={list.id.toString()}>
