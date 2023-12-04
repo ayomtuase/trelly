@@ -2,18 +2,97 @@
 
 import { sampleBoard } from "@/models/sample-board-data";
 import { MoreHorizontal } from "lucide-react";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { useState } from "react";
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  OnDragEndResponder,
+  resetServerContext,
+} from "react-beautiful-dnd";
 import BoardListTitle from "./board-list-title";
 import { Button } from "./ui/button";
 
 const BoardContent = () => {
-  const onDragEnd = () => {};
+  resetServerContext();
+
+  const [boardTasks, setBoardTasks] = useState(sampleBoard);
+
+  const onDragEnd: OnDragEndResponder = (result, provided) => {
+    const { reason, source, destination } = result;
+
+    console.log({ result });
+    if (reason !== "DROP" || typeof destination?.index === "undefined") return;
+
+    const sourceCardIndex = source?.index;
+    const destCardIndex = destination?.index;
+
+    setBoardTasks((prev) => {
+      const cardToMove = prev?.find(
+        (list) => list?.id.toString() === source?.droppableId
+      )?.cards[sourceCardIndex];
+
+      console.log({ cardToMove });
+
+      if (!cardToMove) return prev;
+
+      const destListIndex = prev?.findIndex(
+        (list) => list?.id === Number(destination?.droppableId)
+      );
+
+      console.log({ destListIndex });
+
+      if (destListIndex === -1) return prev;
+
+      const sourceListIndex = prev?.findIndex(
+        (list) => list?.id === Number(source?.droppableId)
+      );
+
+      console.log({ sourceListIndex });
+
+      const newDestinationList = {
+        ...prev?.[destListIndex],
+        cards: prev?.[destListIndex]?.cards?.toSpliced(
+          destCardIndex,
+          0,
+          cardToMove
+        ),
+      };
+
+      if (sourceListIndex === destListIndex) {
+        let newBoard = prev?.toSpliced(destListIndex, 1, newDestinationList);
+        return newBoard;
+      }
+
+      const newSourceList = {
+        ...prev?.[sourceListIndex],
+        cards: prev?.[sourceListIndex]?.cards?.toSpliced(sourceCardIndex, 1),
+      };
+
+      let newBoard = prev?.toSpliced(
+        Number(source?.droppableId),
+        1,
+        newSourceList
+      );
+
+      console.log({ newBoardfirst: newBoard });
+
+      newBoard = newBoard?.toSpliced(destListIndex, 1, newDestinationList);
+
+      console.log({ newBoardSec: newBoard });
+
+      return newBoard;
+    });
+  };
+
+  console.log({ boardTasks });
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="flex space-x-3 overflow-x-auto p-3">
-        {sampleBoard.map((list) => (
+        {boardTasks.map((list) => (
           <div
-            key={list.id}
+            key={list?.id?.toString()}
             className="rounded-xl bg-[#f1f2f4] dark:bg-[#101204] w-[272px]"
           >
             <div className="flex justify-between items-start px-3 py-2 max-w-full">
@@ -26,29 +105,31 @@ const BoardContent = () => {
                 <MoreHorizontal cursor="pointer" size={16} />
               </Button>
             </div>
-            <Droppable droppableId={list.id.toString()}>
+            <Droppable droppableId={list?.id?.toString()}>
               {(provided, snapshot) => (
                 <div
                   className="flex flex-col space-y-2 px-2 pt-2 pb-3"
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
-                  {list.cards.map((card) => (
+                  {list?.cards?.map((card, index) => (
                     <Draggable
-                      index={card.id}
+                      index={index}
                       draggableId={card.id.toString()}
-                      key={card.id}
+                      key={card.id.toString()}
                     >
-                      {(provided, snapshot) => (
-                        <div
-                          className="pl-3 dark:bg-[#22272B] pr-2 py-1 rounded-lg shadow-[0px_1px_1px_#091E4240,0px_0px_1px_#091E424F]"
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                        >
-                          <h4>{card.title}</h4>
-                        </div>
-                      )}
+                      {(provided, snapshot) => {
+                        return (
+                          <div
+                            className="pl-3 dark:bg-[#22272B] pr-2 py-1 rounded-lg shadow-[0px_1px_1px_#091E4240,0px_0px_1px_#091E424F]"
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                          >
+                            <h4>{card.title}</h4>
+                          </div>
+                        );
+                      }}
                     </Draggable>
                   ))}
                 </div>
