@@ -18,10 +18,9 @@ const BoardContent = () => {
 
   const [boardTasks, setBoardTasks] = useState(sampleBoard);
 
-  const onDragEnd: OnDragEndResponder = (result, provided) => {
+  const onDragEnd: OnDragEndResponder = (result) => {
     const { reason, source, destination } = result;
 
-    console.log({ result });
     if (reason !== "DROP" || typeof destination?.index === "undefined") return;
 
     const sourceCardIndex = source?.index;
@@ -32,15 +31,11 @@ const BoardContent = () => {
         (list) => list?.id.toString() === source?.droppableId
       )?.cards[sourceCardIndex];
 
-      console.log({ cardToMove });
-
       if (!cardToMove) return prev;
 
       const destListIndex = prev?.findIndex(
         (list) => list?.id === Number(destination?.droppableId)
       );
-
-      console.log({ destListIndex });
 
       if (destListIndex === -1) return prev;
 
@@ -48,7 +43,22 @@ const BoardContent = () => {
         (list) => list?.id === Number(source?.droppableId)
       );
 
-      console.log({ sourceListIndex });
+      if (sourceListIndex === destListIndex) {
+        const newList = {
+          ...prev?.[sourceListIndex],
+          cards: prev?.[sourceListIndex]?.cards
+            ?.toSpliced(sourceCardIndex, 1)
+            ?.toSpliced(destCardIndex, 0, cardToMove),
+        };
+
+        const newBoard = prev?.toSpliced(sourceListIndex, 1, newList);
+        return newBoard;
+      }
+
+      const newSourceList = {
+        ...prev?.[sourceListIndex],
+        cards: prev?.[sourceListIndex]?.cards?.toSpliced(sourceCardIndex, 1),
+      };
 
       const newDestinationList = {
         ...prev?.[destListIndex],
@@ -59,33 +69,13 @@ const BoardContent = () => {
         ),
       };
 
-      if (sourceListIndex === destListIndex) {
-        let newBoard = prev?.toSpliced(destListIndex, 1, newDestinationList);
-        return newBoard;
-      }
-
-      const newSourceList = {
-        ...prev?.[sourceListIndex],
-        cards: prev?.[sourceListIndex]?.cards?.toSpliced(sourceCardIndex, 1),
-      };
-
-      let newBoard = prev?.toSpliced(
-        Number(source?.droppableId),
-        1,
-        newSourceList
-      );
-
-      console.log({ newBoardfirst: newBoard });
+      let newBoard = prev?.toSpliced(sourceListIndex, 1, newSourceList);
 
       newBoard = newBoard?.toSpliced(destListIndex, 1, newDestinationList);
-
-      console.log({ newBoardSec: newBoard });
 
       return newBoard;
     });
   };
-
-  console.log({ boardTasks });
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
