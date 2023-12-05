@@ -82,7 +82,7 @@ const BoardTitle = () => {
 
         <h1
           className={cn(
-            "font-bold m-0 whitespace-nowrap grow overflow-hidden text-ellipsis text-white text-lg hover:bg-[#A6C5E229] cursor-pointer rounded-sm px-2",
+            "font-bold m-0 whitespace-nowrap grow overflow-hidden text-ellipsis text-white text-lg hover:bg-neutral-hovered cursor-pointer rounded-sm px-2",
             {
               hidden: isEditing,
             }

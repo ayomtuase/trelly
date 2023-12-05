@@ -1,7 +1,7 @@
 "use client";
 
 import { sampleBoard } from "@/models/sample-board-data";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, Plus } from "lucide-react";
 import { useState } from "react";
 import {
   DragDropContext,
@@ -17,6 +17,7 @@ const BoardContent = () => {
   resetServerContext();
 
   const [boardTasks, setBoardTasks] = useState(sampleBoard);
+  const [isAddingNewCard, setIsAddingNewCard] = useState(false);
 
   const onDragEnd: OnDragEndResponder = (result) => {
     const { reason, source, destination } = result;
@@ -83,14 +84,14 @@ const BoardContent = () => {
         {boardTasks.map((list) => (
           <div
             key={list?.id?.toString()}
-            className="rounded-xl bg-[#f1f2f4] dark:bg-[#101204] w-[272px]"
+            className="rounded-xl bg-[#f1f2f4] dark:bg-[#101204] w-[272px] px-2 py-2"
           >
-            <div className="flex justify-between items-start px-3 py-2 max-w-full">
+            <div className="flex justify-between items-start max-w-full">
               <BoardListTitle initialTitle={list.title} />
               <Button
                 variant="outline"
                 size="icon"
-                className="w-8 h-8 ml-2.5 bg-transparent hover:bg-[#091E420F] hover:dark:bg-[#A6C5E229]"
+                className="w-8 h-8 ml-2.5 bg-transparent hover:bg-neutral-hovered"
               >
                 <MoreHorizontal cursor="pointer" size={16} />
               </Button>
@@ -98,7 +99,7 @@ const BoardContent = () => {
             <Droppable droppableId={list?.id?.toString()}>
               {(provided, snapshot) => (
                 <div
-                  className="flex flex-col space-y-2 px-2 pt-2 pb-3"
+                  className="flex flex-col space-y-2 pt-2 pb-3"
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
@@ -125,6 +126,16 @@ const BoardContent = () => {
                 </div>
               )}
             </Droppable>
+            
+            {!isAddingNewCard && (
+              <Button
+                variant="outline"
+                onClick={() => setIsAddingNewCard(true)}
+                className="w-full text-sm justify-start border-0 px-2 py-2 h-auto bg-transparent text-foreground hover:bg-neutral-hovered hover:text-current"
+              >
+                <Plus className="mr-2" size={16} /> Add a card
+              </Button>
+            )}
           </div>
         ))}
       </div>
