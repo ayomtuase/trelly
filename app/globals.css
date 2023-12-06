@@ -8,6 +8,8 @@
     --foreground: 23 43 77;
 
     --neutral-hovered: #091E4224;
+    --brand: 12 102 228;
+    --text-inverse: #fff;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -42,6 +44,8 @@
     --foreground: 182 194 207;
 
     --neutral-hovered: #A6C5E229;
+    --brand: 87 157 255;
+    --text-inverse: #1D2125;
  
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
