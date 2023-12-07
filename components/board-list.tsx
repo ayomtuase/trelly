@@ -1,7 +1,7 @@
 "use client";
 
 import { sampleBoard } from "@/models/sample-board-data";
-import { MoreHorizontal, Plus } from "lucide-react";
+import { MoreHorizontal, Pencil, Plus } from "lucide-react";
 import { useState } from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import BoardListTitle from "./board-list-title";
@@ -42,19 +42,24 @@ const BoardList = ({ list }: { list: (typeof sampleBoard)[number] }) => {
                 {(provided, snapshot) => {
                   return (
                     <div
-                      className="pl-3 dark:bg-[#22272B] pr-2 py-1 rounded-lg shadow-[0px_1px_1px_#091E4240,0px_0px_1px_#091E424F]"
+                      className="px-3 dark:bg-[#22272B] relative pt-2 pb-1 rounded-lg shadow-[0px_1px_1px_#091E4240,0px_0px_1px_#091E424F]"
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
                       <h4>{card.title}</h4>
+                      <Button variant="ghost" className="rounded-full x-"> <Pencil /></Button>
+                     
                     </div>
                   );
                 }}
               </Draggable>
             ))}
             {isAddingNewCard && (
-              <NewCardForm setIsAddingNewCard={setIsAddingNewCard} listId={list?.id}/>
+              <NewCardForm
+                setIsAddingNewCard={setIsAddingNewCard}
+                listId={list?.id}
+              />
             )}
           </div>
         )}
