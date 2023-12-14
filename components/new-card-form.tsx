@@ -4,13 +4,13 @@ import { useBoard } from "@/contexts/board-context";
 import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
 import React, {
-    ChangeEventHandler,
-    Dispatch,
-    SetStateAction,
-    useCallback,
-    useEffect,
-    useRef,
-    useState,
+  ChangeEventHandler,
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
 } from "react";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
@@ -24,7 +24,7 @@ const NewCardForm = ({
 }) => {
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
-  const { board, setBoard } = useBoard();
+  const { setBoard } = useBoard();
 
   const onInputChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     const inputValue = e.target.value;
@@ -39,6 +39,7 @@ const NewCardForm = ({
 
   const inputCallbackRef = useCallback((node: HTMLTextAreaElement) => {
     if (!node) return;
+    node?.focus()
     inputRef.current = node;
   }, []);
 
