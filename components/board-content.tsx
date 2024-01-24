@@ -1,19 +1,31 @@
 "use client";
 
 import { BoardContentContext } from "@/contexts/board-context";
+import { Card } from "@/models/Card";
 import { sampleBoard } from "@/models/sample-board-data";
-import { useMemo, useState } from "react";
+import { CreditCard } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
 import {
   DragDropContext,
   OnDragEndResponder,
-  resetServerContext
+  resetServerContext,
 } from "react-beautiful-dnd";
 import BoardList from "./board-list";
+import CardDialogTitle from "./card-dialog-title";
+import { Dialog, DialogContent } from "./ui/dialog";
 
 const BoardContent = () => {
   resetServerContext();
 
   const [board, setBoard] = useState(sampleBoard);
+
+  const [isCardModalOpen, setCardModalOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState<Card | null>(null);
+
+  const openCard = useCallback((card: Card) => {
+    setCardModalOpen(true);
+    setSelectedCard(card);
+  }, []);
 
   const onDragEnd: OnDragEndResponder = (result) => {
     const { reason, source, destination } = result;
@@ -78,8 +90,9 @@ const BoardContent = () => {
     () => ({
       board,
       setBoard,
+      openCard,
     }),
-    [board]
+    [board, openCard]
   );
 
   return (
@@ -91,6 +104,27 @@ const BoardContent = () => {
           ))}
         </div>
       </DragDropContext>
+
+      {/* Card Details Dialog */}
+
+      <Dialog open={isCardModalOpen} onOpenChange={setCardModalOpen}>
+        <DialogContent className="pl-3 lg:pl-6 pr-1 lg:pr-1.5 bg-popover w-full md:min-w-[700px] rounded-lg">
+          {selectedCard ? (
+            <div className="relative pl-12 mt-5">
+              <CreditCard className="mr-2 absolute left-[0px] top-[10px]" size={16} />
+              <div className="flex items-start flex-col mr-10 lg:mr-16">
+                <CardDialogTitle initialTitle={selectedCard.title} />
+                <p className="mt-1">
+                  in list{" "}
+                  <span className="underline capitalize">
+                    {selectedCard?.list?.title}
+                  </span>
+                </p>
+              </div>
+            </div>
+          ) : null}
+        </DialogContent>
+      </Dialog>
     </BoardContentContext.Provider>
   );
 };

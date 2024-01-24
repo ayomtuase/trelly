@@ -16,7 +16,7 @@ const CardEditor = ({
   listId: string;
 }) => {
   const [title, setTitle] = useState(card?.title);
-  const { setBoard } = useBoard();
+  const { setBoard, openCard } = useBoard();
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
   const inputCallbackRef = useCallback((node: HTMLTextAreaElement) => {
@@ -118,6 +118,7 @@ const CardEditor = ({
         <div className="flex flex-col space-x-2 absolute top-0 right-0 translate-x-[calc(100%+8px)]">
           <Button
             asChild
+            onClick={() => openCard(card)}
             className="bg-popover text-black dark:text-foreground hover:bg-[#454F59] px-2.5 py-1.5 h-auto rounded"
           >
             <Link href="">

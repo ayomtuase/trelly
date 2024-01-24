@@ -1,3 +1,4 @@
+import { useBoard } from "@/contexts/board-context";
 import { Card as CardType } from "@/models/Card";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
@@ -15,12 +16,14 @@ const Card = ({
   listId: string;
 }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const { openCard } = useBoard();
 
   return (
     <div className="relative">
       <div
-        className="px-3 dark:bg-[#22272B] group flex relative py-2 rounded-lg shadow-[0px_1px_1px_#091E4240,0px_0px_1px_#091E424F]"
+        className="px-3 dark:bg-[#22272B] group flex relative py-2 rounded-lg !cursor-pointer shadow-[0px_1px_1px_#091E4240,0px_0px_1px_#091E424F]"
         ref={provided.innerRef}
+        onClick={() => openCard(card)}
         onContextMenu={(e) => {
           e.preventDefault();
           setIsEditing(true);
@@ -38,7 +41,7 @@ const Card = ({
         </Button>
       </div>
       {isEditing ? (
-        <CardEditor card={card} setIsEditing={setIsEditing} listId={listId}/>
+        <CardEditor card={card} setIsEditing={setIsEditing} listId={listId} />
       ) : null}
     </div>
   );
