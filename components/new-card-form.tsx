@@ -39,7 +39,7 @@ const NewCardForm = ({
 
   const inputCallbackRef = useCallback((node: HTMLTextAreaElement) => {
     if (!node) return;
-    node?.focus()
+    node?.focus();
     inputRef.current = node;
   }, []);
 
@@ -59,7 +59,12 @@ const NewCardForm = ({
         ...prev[listIndex],
         cards: [
           ...prev[listIndex]?.cards,
-          { id: "34", title: inputValue, description: "" },
+          {
+            id: "34",
+            title: inputValue,
+            description: inputValue,
+            list: { title: prev[listIndex]?.title, id: prev[listIndex]?.id },
+          },
         ],
       };
 
