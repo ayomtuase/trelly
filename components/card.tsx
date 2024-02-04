@@ -34,7 +34,10 @@ const Card = ({
         <h4>{card.title}</h4>
         <Button
           variant="ghost"
-          onClick={() => setIsEditing(true)}
+          onClick={(e) => {
+            e.stopPropagation()
+            setIsEditing(true)
+          }}
           className="rounded-full hidden group-hover:flex absolute h-8 w-8 p-0 top-0 right-0"
         >
           <Pencil size={16} />

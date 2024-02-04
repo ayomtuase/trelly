@@ -3,7 +3,7 @@
 import { BoardContentContext } from "@/contexts/board-context";
 import { Card } from "@/models/Card";
 import { sampleBoard } from "@/models/sample-board-data";
-import { CreditCard } from "lucide-react";
+import { AlignLeft, CreditCard } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import {
   DragDropContext,
@@ -110,18 +110,30 @@ const BoardContent = () => {
       <Dialog open={isCardModalOpen} onOpenChange={setCardModalOpen}>
         <DialogContent className="pl-3 lg:pl-6 pr-1 lg:pr-1.5 bg-popover w-full md:min-w-[700px] rounded-lg">
           {selectedCard ? (
-            <div className="relative pl-12 mt-5">
-              <CreditCard className="mr-2 absolute left-[0px] top-[10px]" size={16} />
-              <div className="flex items-start flex-col mr-10 lg:mr-16">
-                <CardDialogTitle initialTitle={selectedCard.title} />
-                <p className="mt-1">
-                  in list{" "}
-                  <span className="underline capitalize">
-                    {selectedCard?.list?.title}
-                  </span>
-                </p>
+            <>
+              <div className="relative pl-12 mt-5">
+                <CreditCard
+                  className="mr-2 absolute left-[0px] top-[10px]"
+                  size={16}
+                />
+                <div className="flex items-start flex-col mr-10 lg:mr-16">
+                  <CardDialogTitle initialTitle={selectedCard.title} />
+                  <p className="mt-1">
+                    in list{" "}
+                    <span className="underline capitalize">
+                      {selectedCard?.list?.title}
+                    </span>
+                  </p>
+                </div>
               </div>
-            </div>
+
+              <div className="relative pl-12 mt-5">
+                <AlignLeft
+                  className="mr-2 absolute left-[0px] top-[10px]"
+                  size={16}
+                />
+              </div>
+            </>
           ) : null}
         </DialogContent>
       </Dialog>

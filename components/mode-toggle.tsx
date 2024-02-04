@@ -46,6 +46,7 @@ const ModeToggle = () => {
           const isSelected = theme === mode;
           return (
             <DropdownMenuItem
+              key={mode}
               onClick={() => setTheme(mode)}
               onSelect={(e) => {
                 e.preventDefault();

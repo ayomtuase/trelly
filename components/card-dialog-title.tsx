@@ -4,11 +4,11 @@ import { Textarea } from "@/components/ui/textarea";
 import useOnClickOutside from "@/hooks/use-click-outside";
 import { cn } from "@/lib/utils";
 import {
-    ChangeEventHandler,
-    useCallback,
-    useEffect,
-    useRef,
-    useState,
+  ChangeEventHandler,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
 } from "react";
 
 const CardDialogTitle = ({ initialTitle }: { initialTitle: string }) => {
@@ -62,12 +62,15 @@ const CardDialogTitle = ({ initialTitle }: { initialTitle: string }) => {
   }, [isEditing]);
 
   return (
-    <div className="grow h-auto text-xl ">
+    <div className="grow h-auto text-xl w-full">
       {isEditing && (
         <Textarea
           className={cn(
-            "font-bold w-full -ml-2 bg-popover pl-[7.5px] pr-2 pt-[9px] pb-2.5 leading-4 overflow-y-hidden rounded-sm resize-none"
+            "font-bold w-full -ml-2 bg-popover pl-[7.5px] pr-2 pt-[9px] pb-2.5 overflow-y-hidden rounded-sm resize-none"
           )}
+          style={{
+            fontSize: "inherit",
+          }}
           ref={inputCallbackRef}
           value={inputValue}
           onChange={onInputChange}
